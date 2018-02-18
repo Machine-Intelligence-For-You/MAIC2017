@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_awale_test" default="compile.module.awale_test">
+  <dirname property="module.awale_test.basedir" file="${ant.file.module_awale_test}"/>
+  
+  <property name="module.jdk.home.awale_test" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.awale_test" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.awale_test" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.awale_test" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="awale_test.output.dir" value="${module.awale_test.basedir}/out/production/Awale_Test"/>
+  <property name="awale_test.testoutput.dir" value="${module.awale_test.basedir}/out/test/Awale_Test"/>
+  
+  <path id="awale_test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="awale_test.module.production.classpath">
+    <path refid="${module.jdk.classpath.awale_test}"/>
+  </path>
+  
+  <path id="awale_test.runtime.production.module.classpath">
+    <pathelement location="${awale_test.output.dir}"/>
+  </path>
+  
+  <path id="awale_test.module.classpath">
+    <path refid="${module.jdk.classpath.awale_test}"/>
+    <pathelement location="${awale_test.output.dir}"/>
+  </path>
+  
+  <path id="awale_test.runtime.module.classpath">
+    <pathelement location="${awale_test.testoutput.dir}"/>
+    <pathelement location="${awale_test.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.awale_test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.awale_test">
+    <patternset refid="excluded.from.module.awale_test"/>
+  </patternset>
+  
+  <path id="awale_test.module.sourcepath">
+    <dirset dir="${module.awale_test.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.awale_test" depends="compile.module.awale_test.production,compile.module.awale_test.tests" description="Compile module Awale_Test"/>
+  
+  <target name="compile.module.awale_test.production" depends="register.custom.compilers" description="Compile module Awale_Test; production classes">
+    <mkdir dir="${awale_test.output.dir}"/>
+    <javac2 destdir="${awale_test.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.awale_test}/javac">
+      <compilerarg line="${compiler.args.awale_test}"/>
+      <bootclasspath refid="awale_test.module.bootclasspath"/>
+      <classpath refid="awale_test.module.production.classpath"/>
+      <src refid="awale_test.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.awale_test"/>
+    </javac2>
+    
+    <copy todir="${awale_test.output.dir}">
+      <fileset dir="${module.awale_test.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.awale_test.tests" depends="register.custom.compilers,compile.module.awale_test.production" description="compile module Awale_Test; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.awale_test" description="cleanup module">
+    <delete dir="${awale_test.output.dir}"/>
+    <delete dir="${awale_test.testoutput.dir}"/>
+  </target>
+</project>

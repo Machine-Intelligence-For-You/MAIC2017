@@ -1,0 +1,38 @@
+	{       Grille copie = this.etatGrille();
+//        int sommeJ1 = 0;
+//        int sommeJ2 = 0;
+//
+//        for(int j = 0; j < 6; j++)
+//        {
+//            sommeJ1 = sommeJ1 + copie.grille[i];
+//            sommeJ2 = sommeJ2 + copie.grille[i + 6];
+//        }
+//        if(i < 6)
+//        {
+//            return this.grille[i] > 0 && sommeJ2 > 0;
+//        }
+//        else
+//        {}
+        if (i <6 )
+        {
+            copie.deplaceBille(i,1);
+            int somme = 0;
+            for(int j = 6; j < 12; j++)
+            {
+                somme = somme + copie.grille[j];
+            }
+            System.out.println(somme);
+            return this.grille[i] > 0 && somme > 0;
+        }
+        else
+        {
+            copie.deplaceBille(i,2);
+            int somme = 0;
+            for(int j = 0; j < 6; j++)
+            {
+                somme = somme + copie.grille[j];
+            }
+            System.out.println(somme);
+            return this.grille[i] > 0 && somme > 0;
+        }
+        
